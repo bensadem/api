@@ -21,6 +21,11 @@ interface AppConfig {
   defaultUserRole: string;
   apiRateLimit: number;
   enableAnalytics: boolean;
+  // IPTV Proxy
+  iptvProxyEnabled: boolean;
+  iptvProxyBaseUrl: string;
+  iptvProxyUsername: string;
+  iptvProxyPassword: string;
 }
 
 export default function SettingsPage() {
@@ -286,6 +291,70 @@ export default function SettingsPage() {
             <span className="text-gray-300">Enable Analytics</span>
           </label>
         </div>
+      </div>
+
+      {/* IPTV Proxy Settings */}
+      <div className="card">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center">
+            <FiServer className="w-5 h-5 text-indigo-400" />
+          </div>
+          <div>
+            <h2 className="font-semibold text-white">IPTV Proxy</h2>
+            <p className="text-sm text-gray-400">Configure external IPTV provider proxy</p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 mb-6">
+          <label className="flex items-center gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={config.iptvProxyEnabled || false}
+              onChange={(e) => handleChange('iptvProxyEnabled', e.target.checked)}
+              className="w-5 h-5 rounded border-dark-300 bg-dark-300 text-primary-500 focus:ring-primary-500"
+            />
+            <span className="text-gray-300">Enable IPTV Proxy</span>
+          </label>
+        </div>
+
+        {(config.iptvProxyEnabled) && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Base URL
+              </label>
+              <input
+                type="text"
+                value={config.iptvProxyBaseUrl || ''}
+                onChange={(e) => handleChange('iptvProxyBaseUrl', e.target.value)}
+                className="w-full"
+                placeholder="http://live.lynxiptv.xyz"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Username
+              </label>
+              <input
+                type="text"
+                value={config.iptvProxyUsername || ''}
+                onChange={(e) => handleChange('iptvProxyUsername', e.target.value)}
+                className="w-full"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Password
+              </label>
+              <input
+                type="text"
+                value={config.iptvProxyPassword || ''}
+                onChange={(e) => handleChange('iptvProxyPassword', e.target.value)}
+                className="w-full"
+              />
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Server Info */}
