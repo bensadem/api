@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db/connection';
 const Channel = require('@/lib/db/models/Channel');
 
-import { resolveStreamUrl } from '@/lib/utils/iptv-proxy';
+import { getOriginalUrl } from '@/lib/utils/iptv-proxy';
 
 export const dynamic = 'force-dynamic';
 
@@ -28,13 +28,13 @@ export async function GET(
 
         // If streamUrl is missing but we have an external ID, try to resolve it
         if (!streamUrl && channel.externalChannelId) {
-            console.log(`Resolving external ID: ${channel.externalChannelId}`);
-            const resolvedUrl = await resolveStreamUrl(channel.externalChannelId);
-            if (resolvedUrl) {
-                console.log(`Successfully resolved to: ${resolvedUrl}`);
-                streamUrl = resolvedUrl;
+            console.log(`Getting proxy URL for external ID: ${channel.externalChannelId}`);
+            const proxyUrl = await getOriginalUrl(channel.externalChannelId);
+            if (proxyUrl) {
+                console.log(`Returning proxy URL: ${proxyUrl}`);
+                streamUrl = proxyUrl;
             } else {
-                console.error(`Failed to resolve external ID: ${channel.externalChannelId}`);
+                console.error(`Failed to get proxy URL for external ID: ${channel.externalChannelId}`);
             }
         }
 

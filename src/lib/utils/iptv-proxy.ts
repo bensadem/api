@@ -22,6 +22,19 @@ export async function getIptvConfig(): Promise<IptvConfig> {
     };
 }
 
+/**
+ * Returns the original proxy URL without resolving it.
+ * This is useful to avoid IP locking issues where the token is bound to the server's IP.
+ */
+export async function getOriginalUrl(channelId: string): Promise<string | null> {
+    const config = await getIptvConfig();
+    if (!config.enabled || !config.baseUrl || !config.username || !config.password) {
+        return null;
+    }
+    const baseUrl = config.baseUrl.replace(/\/$/, '');
+    return `${baseUrl}/${config.username}/${config.password}/${channelId}`;
+}
+
 export async function resolveStreamUrl(channelId: string): Promise<string | null> {
     try {
         const config = await getIptvConfig();
