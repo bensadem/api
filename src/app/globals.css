@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 18, 18, 18;
+  --background-end-rgb: 18, 18, 18;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  min-height: 100vh;
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #4c4c4c #1e1e1e;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: #1e1e1e;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #4c4c4c;
+    border-radius: 4px;
+  }
+}
+
+/* Form styles */
+input, select, textarea {
+  @apply bg-dark-200 border border-dark-300 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary-500 transition-colors;
+}
+
+input:disabled, select:disabled, textarea:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* Button styles */
+.btn {
+  @apply px-4 py-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark-100;
+}
+
+.btn-primary {
+  @apply bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500;
+}
+
+.btn-secondary {
+  @apply bg-dark-300 text-white hover:bg-dark-400 focus:ring-dark-400;
+}
+
+.btn-danger {
+  @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
+}
+
+.btn-success {
+  @apply bg-green-600 text-white hover:bg-green-700 focus:ring-green-500;
+}
+
+/* Card styles */
+.card {
+  @apply bg-dark-200 rounded-xl border border-dark-300 p-6;
+}
+
+/* Table styles */
+.table-container {
+  @apply overflow-x-auto scrollbar-thin;
+}
+
+table {
+  @apply w-full;
+}
+
+th {
+  @apply text-left text-gray-400 font-medium py-3 px-4 border-b border-dark-300;
+}
+
+td {
+  @apply py-3 px-4 border-b border-dark-300;
+}
+
+tr:hover td {
+  @apply bg-dark-300/50;
+}
