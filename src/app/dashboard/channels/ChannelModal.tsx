@@ -10,6 +10,7 @@ interface Channel {
   _id?: string;
   name: string;
   streamUrl: string;
+  externalChannelId?: string;
   streamUrls?: {
     auto?: string;
     fhd?: string;
@@ -55,6 +56,7 @@ export default function ChannelModal({ channel, categories, onClose, onSave }: P
     defaultValues: {
       name: channel?.name || '',
       streamUrl: channel?.streamUrl || '',
+      externalChannelId: channel?.externalChannelId || '',
       streamUrls: channel?.streamUrls || { auto: '', fhd: '', hd: '', sd: '', ld: '' },
       logoUrl: channel?.logoUrl || '',
       description: channel?.description || '',
@@ -73,6 +75,7 @@ export default function ChannelModal({ channel, categories, onClose, onSave }: P
   );
 
   const streamUrl = watch('streamUrl');
+  const externalChannelId = watch('externalChannelId');
 
   const handleParseM3U8 = async () => {
     if (!streamUrl) {
@@ -220,14 +223,37 @@ export default function ChannelModal({ channel, categories, onClose, onSave }: P
                   </button>
                 </div>
               </div>
+
               <input
-                {...register('streamUrl', { required: 'Stream URL is required' })}
+                {...register('streamUrl', {
+                  validate: value => {
+                    if (!value && !externalChannelId) {
+                      return 'Either Stream URL or External Channel ID is required';
+                    }
+                    return true;
+                  }
+                })}
                 className="w-full"
                 placeholder="https://example.com/stream.m3u8"
               />
               {errors.streamUrl && (
                 <p className="text-red-400 text-sm mt-1">{errors.streamUrl.message}</p>
               )}
+
+              {/* External Channel ID */}
+              <div className="mt-4">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  External Channel ID (IPTV Proxy)
+                </label>
+                <input
+                  {...register('externalChannelId')}
+                  className="w-full"
+                  placeholder="e.g. 12345 (Leave Stream URL empty if using this)"
+                />
+                <p className="text-xs text-gray-400 mt-1">
+                  If set, the server will resolve the stream URL using the configured proxy.
+                </p>
+              </div>
 
               {/* Multiple Quality URLs */}
               {showQualityUrls && (
@@ -372,7 +398,7 @@ export default function ChannelModal({ channel, categories, onClose, onSave }: P
             </button>
           </div>
         </form>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }
