@@ -26,15 +26,24 @@ async function testResolution() {
         console.log(`Constructed URL: ${url}`);
 
         try {
-            console.log('Sending HEAD request...');
-            const response = await axios.head(url, {
+            console.log('Sending GET request (stream mode)...');
+            const response = await axios.get(url, {
                 maxRedirects: 5,
-                validateStatus: (status) => status < 400
+                timeout: 15000,
+                validateStatus: (status) => status >= 200 && status < 400,
+                responseType: 'stream'
             });
+
+            // Immediately destroy the stream to avoid downloading
+            if (response.data && typeof response.data.destroy === 'function') {
+                response.data.destroy();
+                console.log('Stream destroyed.');
+            }
 
             const finalUrl = response.request.res.responseUrl || response.request.res.url || url;
             console.log('Success!');
             console.log('Final URL:', finalUrl);
+            console.log('Headers:', response.headers);
         } catch (error) {
             console.error('Request failed:', error.message);
             if (error.response) {

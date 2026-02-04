@@ -14,22 +14,27 @@ export async function GET(
         await connectDB();
         const { id } = params;
 
-        const channel = await Channel.findOne({ _id: id, isActive: true });
-
+        const channel = await Channel.findById(id);
         if (!channel) {
+            console.log(`Channel ${id} not found`);
             return NextResponse.json(
                 { success: false, message: 'Channel not found' },
                 { status: 404 }
             );
         }
 
+        console.log(`Play request for channel: ${channel.name} (ID: ${id})`);
         let streamUrl = channel.streamUrl;
 
         // If streamUrl is missing but we have an external ID, try to resolve it
         if (!streamUrl && channel.externalChannelId) {
+            console.log(`Resolving external ID: ${channel.externalChannelId}`);
             const resolvedUrl = await resolveStreamUrl(channel.externalChannelId);
             if (resolvedUrl) {
+                console.log(`Successfully resolved to: ${resolvedUrl}`);
                 streamUrl = resolvedUrl;
+            } else {
+                console.error(`Failed to resolve external ID: ${channel.externalChannelId}`);
             }
         }
 
