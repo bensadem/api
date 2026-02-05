@@ -65,11 +65,24 @@ export async function POST(request: NextRequest) {
         }, { status: 201 });
     } catch (error: any) {
         console.error('Create channel error:', error);
+
+        // Handle Mongoose validation errors specifically
+        if (error.name === 'ValidationError') {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: 'Validation failed',
+                    errors: Object.values(error.errors).map((err: any) => err.message)
+                },
+                { status: 400 }
+            );
+        }
+
         return NextResponse.json(
             {
                 success: false,
                 message: error.message || 'Failed to create channel',
-                error: error.stack // Temporarily return stack for debugging
+                error: process.env.NODE_ENV === 'development' ? error.stack : undefined
             },
             { status: 500 }
         );

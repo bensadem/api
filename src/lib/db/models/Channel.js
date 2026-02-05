@@ -18,7 +18,7 @@ const channelSchema = new mongoose.Schema({
     },
     streamUrl: {
         type: String,
-        required: [false, 'Stream URL is required'] // Changed to optional as we might use externalChannelId
+        required: false
     },
     externalChannelId: {
         type: String,
