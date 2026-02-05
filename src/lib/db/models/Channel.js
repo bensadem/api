@@ -39,14 +39,6 @@ const channelSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
-    country: {
-        type: String,
-        default: 'International'
-    },
-    language: {
-        type: String,
-        default: 'English'
-    },
     isActive: {
         type: Boolean,
         default: true
@@ -84,8 +76,8 @@ const channelSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Index for search
-channelSchema.index({ name: 'text', description: 'text' });
+// Index for search - Disable language override to prevent error when field 'language' is used/empty
+channelSchema.index({ name: 'text', description: 'text' }, { language_override: 'no_language' });
 
 // Static method to get channels by category
 channelSchema.statics.getByCategory = function (category) {

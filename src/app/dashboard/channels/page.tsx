@@ -12,7 +12,6 @@ interface Channel {
   streamUrl: string;
   logoUrl?: string;
   category?: string;
-  country?: string;
   isActive: boolean;
   isFeatured: boolean;
 }

@@ -21,8 +21,6 @@ interface Channel {
   logoUrl?: string;
   description?: string;
   category?: { _id: string; name: string } | string;
-  country?: string;
-  language?: string;
   isActive: boolean;
   order?: number;
 }
@@ -59,8 +57,6 @@ export default function ChannelModal({ channel, categories, onClose, onSave }: P
       logoUrl: channel?.logoUrl || '',
       description: channel?.description || '',
       category: typeof channel?.category === 'object' ? channel.category.name : channel?.category || '',
-      country: channel?.country || '',
-      language: channel?.language || '',
       isActive: channel?.isActive ?? true,
       order: channel?.order || 0,
     },
