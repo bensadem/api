@@ -22,7 +22,6 @@ interface Channel {
   description?: string;
   category?: { _id: string; name: string } | string;
   isActive: boolean;
-  order?: number;
 }
 
 interface Category {
@@ -58,7 +57,6 @@ export default function ChannelModal({ channel, categories, onClose, onSave }: P
       description: channel?.description || '',
       category: typeof channel?.category === 'object' ? channel.category.name : channel?.category || '',
       isActive: channel?.isActive ?? true,
-      order: channel?.order || 0,
     },
   });
 
@@ -328,18 +326,6 @@ export default function ChannelModal({ channel, categories, onClose, onSave }: P
 
 
 
-            {/* Order */}
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                Order
-              </label>
-              <input
-                type="number"
-                {...register('order', { valueAsNumber: true })}
-                className="w-full"
-                placeholder="0"
-              />
-            </div>
 
             {/* Switches */}
             <div className="md:col-span-2 flex flex-wrap gap-6">
