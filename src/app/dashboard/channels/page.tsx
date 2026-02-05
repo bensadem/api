@@ -112,7 +112,10 @@ export default function ChannelsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-white">Channels</h1>
+          <h1 className="text-3xl font-bold text-white flex items-center gap-2">
+            Channels
+            <span className="text-xs font-normal text-gray-500 bg-dark-300 px-2 py-1 rounded">v1.1</span>
+          </h1>
           <p className="text-gray-400 mt-1">Manage your TV channels</p>
         </div>
         <button onClick={handleAdd} className="btn btn-primary flex items-center gap-2">
@@ -178,9 +181,9 @@ export default function ChannelsPage() {
                   <tr key={channel._id}>
                     <td>
                       <div className="flex items-center gap-3">
-                        {channel.logoUrl ? (
+                        {(channel.logoUrl || (channel as any).logo) ? (
                           <img
-                            src={channel.logoUrl}
+                            src={channel.logoUrl || (channel as any).logo}
                             alt={channel.name}
                             className="w-10 h-10 rounded-lg object-cover bg-dark-300"
                           />
@@ -192,13 +195,13 @@ export default function ChannelsPage() {
                         <div>
                           <p className="text-white font-medium">{channel.name}</p>
                           <p className="text-gray-400 text-sm truncate max-w-[200px]">
-                            {channel.streamUrl}
+                            {channel.streamUrl || (channel as any).externalChannelId || '-'}
                           </p>
                         </div>
                       </div>
                     </td>
                     <td className="text-gray-300">
-                      {channel.category || '-'}
+                      {typeof channel.category === 'object' ? (channel.category as any).name : (channel.category || '-')}
                     </td>
 
                     <td>
