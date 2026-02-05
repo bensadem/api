@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
 
         const { searchParams } = new URL(request.url);
         const page = parseInt(searchParams.get('page') || '1');
-        const limit = parseInt(searchParams.get('limit') || '20');
+        const limit = parseInt(searchParams.get('limit') || '1000');
         const category = searchParams.get('category');
         const search = searchParams.get('search');
         const isActive = searchParams.get('isActive');
@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
         const skip = (page - 1) * limit;
 
         const channels = await Channel.find(query)
-            .sort({ category: 1, order: 1, name: 1 })
+            .sort({ category: 1, name: 1 })
             .skip(skip)
             .limit(limit);
 

@@ -93,15 +93,6 @@ export default function ChannelsPage() {
     fetchChannels();
   };
 
-  const handleReorder = async (id: string, direction: 'up' | 'down') => {
-    try {
-      await channelsApi.reorder(id, direction);
-      fetchChannels();
-    } catch (error) {
-      toast.error('Failed to reorder channel');
-    }
-  };
-
   const filteredChannels = channels.filter((channel) =>
     channel.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -215,20 +206,6 @@ export default function ChannelsPage() {
                     </td>
                     <td>
                       <div className="flex items-center justify-end gap-1">
-                        <button
-                          onClick={() => handleReorder(channel._id, 'up')}
-                          className="p-2 hover:bg-dark-300 rounded-lg transition-colors"
-                          title="Move Up"
-                        >
-                          <FiChevronUp className="w-4 h-4 text-gray-400" />
-                        </button>
-                        <button
-                          onClick={() => handleReorder(channel._id, 'down')}
-                          className="p-2 hover:bg-dark-300 rounded-lg transition-colors"
-                          title="Move Down"
-                        >
-                          <FiChevronDown className="w-4 h-4 text-gray-400" />
-                        </button>
                         <button
                           onClick={() => handleEdit(channel)}
                           className="p-2 hover:bg-dark-300 rounded-lg transition-colors"
