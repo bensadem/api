@@ -11,7 +11,7 @@ interface Channel {
   name: string;
   streamUrl: string;
   logo?: string;
-  category?: { _id: string; name: string };
+  category?: string;
   country?: string;
   quality?: string;
   isActive: boolean;
@@ -170,9 +170,7 @@ export default function ChannelsPage() {
                 <tr>
                   <th>Channel</th>
                   <th>Category</th>
-                  <th>Quality</th>
                   <th>Status</th>
-                  <th>Featured</th>
                   <th className="text-right">Actions</th>
                 </tr>
               </thead>
@@ -201,16 +199,9 @@ export default function ChannelsPage() {
                       </div>
                     </td>
                     <td className="text-gray-300">
-                      {channel.category?.name || '-'}
+                      {channel.category || '-'}
                     </td>
 
-                    <td>
-                      {channel.quality && (
-                        <span className="px-2 py-1 bg-primary-500/20 text-primary-400 rounded text-sm">
-                          {channel.quality}
-                        </span>
-                      )}
-                    </td>
                     <td>
                       <span
                         className={`px-2 py-1 rounded text-sm ${channel.isActive
@@ -220,13 +211,6 @@ export default function ChannelsPage() {
                       >
                         {channel.isActive ? 'Active' : 'Inactive'}
                       </span>
-                    </td>
-                    <td>
-                      {channel.isFeatured && (
-                        <span className="px-2 py-1 bg-yellow-500/20 text-yellow-400 rounded text-sm">
-                          Featured
-                        </span>
-                      )}
                     </td>
                     <td>
                       <div className="flex items-center justify-end gap-1">

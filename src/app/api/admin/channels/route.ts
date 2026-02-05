@@ -54,6 +54,7 @@ export async function POST(request: NextRequest) {
     try {
         await connectDB();
         const body = await request.json();
+        console.log('Creating channel with body:', JSON.stringify(body, null, 2));
 
         const channel = await Channel.create(body);
 
@@ -65,7 +66,11 @@ export async function POST(request: NextRequest) {
     } catch (error: any) {
         console.error('Create channel error:', error);
         return NextResponse.json(
-            { success: false, message: error.message || 'Failed to create channel' },
+            {
+                success: false,
+                message: error.message || 'Failed to create channel',
+                error: error.stack // Temporarily return stack for debugging
+            },
             { status: 500 }
         );
     }

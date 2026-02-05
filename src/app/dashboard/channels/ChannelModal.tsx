@@ -25,7 +25,6 @@ interface Channel {
   language?: string;
   quality?: string;
   isActive: boolean;
-  isFeatured: boolean;
   order?: number;
 }
 
@@ -65,7 +64,6 @@ export default function ChannelModal({ channel, categories, onClose, onSave }: P
       language: channel?.language || '',
       quality: channel?.quality || 'HD',
       isActive: channel?.isActive ?? true,
-      isFeatured: channel?.isFeatured ?? false,
       order: channel?.order || 0,
     },
   });
@@ -334,19 +332,7 @@ export default function ChannelModal({ channel, categories, onClose, onSave }: P
               />
             </div>
 
-            {/* Quality */}
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                Quality
-              </label>
-              <select {...register('quality')} className="w-full">
-                <option value="">Select quality</option>
-                <option value="SD">SD</option>
-                <option value="HD">HD</option>
-                <option value="FHD">FHD</option>
-                <option value="4K">4K</option>
-              </select>
-            </div>
+
 
             {/* Order */}
             <div>
@@ -370,14 +356,6 @@ export default function ChannelModal({ channel, categories, onClose, onSave }: P
                   className="w-5 h-5 rounded border-dark-300 bg-dark-300 text-primary-500 focus:ring-primary-500"
                 />
                 <span className="text-gray-300">Active</span>
-              </label>
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  {...register('isFeatured')}
-                  className="w-5 h-5 rounded border-dark-300 bg-dark-300 text-primary-500 focus:ring-primary-500"
-                />
-                <span className="text-gray-300">Featured</span>
               </label>
             </div>
           </div>
