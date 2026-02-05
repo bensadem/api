@@ -10,7 +10,7 @@ interface Channel {
   _id: string;
   name: string;
   streamUrl: string;
-  logo?: string;
+  logoUrl?: string;
   category?: string;
   country?: string;
   quality?: string;
@@ -179,9 +179,9 @@ export default function ChannelsPage() {
                   <tr key={channel._id}>
                     <td>
                       <div className="flex items-center gap-3">
-                        {channel.logo ? (
+                        {channel.logoUrl ? (
                           <img
-                            src={channel.logo}
+                            src={channel.logoUrl}
                             alt={channel.name}
                             className="w-10 h-10 rounded-lg object-cover bg-dark-300"
                           />
