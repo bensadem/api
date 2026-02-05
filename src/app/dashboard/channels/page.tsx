@@ -13,7 +13,6 @@ interface Channel {
   logoUrl?: string;
   category?: string;
   country?: string;
-  quality?: string;
   isActive: boolean;
   isFeatured: boolean;
 }

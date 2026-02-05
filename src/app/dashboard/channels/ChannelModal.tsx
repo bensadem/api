@@ -23,7 +23,6 @@ interface Channel {
   category?: { _id: string; name: string } | string;
   country?: string;
   language?: string;
-  quality?: string;
   isActive: boolean;
   order?: number;
 }
@@ -62,7 +61,6 @@ export default function ChannelModal({ channel, categories, onClose, onSave }: P
       category: typeof channel?.category === 'object' ? channel.category.name : channel?.category || '',
       country: channel?.country || '',
       language: channel?.language || '',
-      quality: channel?.quality || 'HD',
       isActive: channel?.isActive ?? true,
       order: channel?.order || 0,
     },
